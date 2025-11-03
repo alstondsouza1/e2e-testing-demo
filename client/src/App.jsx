@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3001/todos")
+      .then((r) => r.json())
+      .then(setTodos)
+      .catch(console.error);
+  }, []);
+
+  const addTodo = async () => {
+    if (!text.trim()) return;
+    await fetch("http://localhost:3001/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    setTodos((prev) => [...prev, text]);
+    setText("");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main style={{ fontFamily: "system-ui", padding: 24, maxWidth: 500 }}>
+      <h1>To-Do App</h1>
+      <div style={{ display: "flex", gap: 8 }}>
+        <input
+          aria-label="todo-input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Add a task…"
+        />
+        <button onClick={addTodo}>Add</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <ul style={{ marginTop: 12 }}>
+        {todos.map((t, i) => (
+          <li key={i}>{t}</li>
+        ))}
+      </ul>
+    </main>
+  );
 }
 
-export default App
+export default App;
