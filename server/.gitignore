@@ -1,14 +1,2 @@
 node_modules/
-.env
-*.env
-.env.*.local
-
-# Logs
-*.log
-
-# System
 .DS_Store
-
-# IDE
-.vscode/
-.idea/

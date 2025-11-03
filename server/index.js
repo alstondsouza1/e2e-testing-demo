@@ -14,11 +14,10 @@ app.get("/todos", (_req, res) => {
 app.post("/todos", (req, res) => {
   const { text } = req.body || {};
   if (!text || !text.trim()) {
-    return res.status(400).json({ error: "Text is required" });
+    return res.status(400).json({ error: "Text required" });
   }
   todos.push(text.trim());
   res.json({ success: true });
 });
 
-const PORT = 3001;
-app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
+app.listen(3001, () => console.log("API running on http://localhost:3001"));
