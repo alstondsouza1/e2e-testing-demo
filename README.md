@@ -26,7 +26,7 @@ cd ../client && npm install
 ### Start Backend
 ```bash
 cd server
-node server.js
+node index.js
 ```
 
 Runs at: `http://localhost:3001`
@@ -49,6 +49,10 @@ npm run test:e2e
 ## Cypress Test Example
 ```js
 describe("Todo App", () => {
+  beforeEach(() => {
+    cy.request("POST", "http://localhost:3001/reset");
+  });
+
   it("adds a todo", () => {
     cy.visit("/");
     cy.get("input[aria-label='todo-input']").type("Buy milk");
@@ -57,6 +61,16 @@ describe("Todo App", () => {
   });
 });
 ```
+
+---
+
+## 🔁 API Routes
+
+  Method   Endpoint   Description
+  -------- ---------- ----------------------------
+  GET      `/todos`   Get todos
+  POST     `/todos`   Add todo
+  POST     `/reset`   Reset todos (testing only)
 
 ---
 
