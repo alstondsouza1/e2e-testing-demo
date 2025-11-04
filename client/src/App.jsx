@@ -6,7 +6,7 @@ function App() {
 
   useEffect(() => {
     fetch("http://localhost:3001/todos")
-      .then((r) => r.json())
+      .then(r => r.json())
       .then(setTodos)
       .catch(console.error);
   }, []);
@@ -18,7 +18,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
     });
-    setTodos((prev) => [...prev, text]);
+    setTodos(prev => [...prev, text]);
     setText("");
   };
 
@@ -34,6 +34,7 @@ function App() {
         />
         <button onClick={addTodo}>Add</button>
       </div>
+
       <ul style={{ marginTop: 12 }}>
         {todos.map((t, i) => (
           <li key={i}>{t}</li>

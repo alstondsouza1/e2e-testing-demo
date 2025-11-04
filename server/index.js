@@ -7,17 +7,23 @@ app.use(express.json());
 
 let todos = [];
 
+// GET todos
 app.get("/todos", (_req, res) => {
   res.json(todos);
 });
 
+// ADD todo
 app.post("/todos", (req, res) => {
   const { text } = req.body || {};
-  if (!text || !text.trim()) {
-    return res.status(400).json({ error: "Text required" });
-  }
+  if (!text?.trim()) return res.status(400).json({ error: "Text required" });
   todos.push(text.trim());
   res.json({ success: true });
 });
 
-app.listen(3001, () => console.log("API running on http://localhost:3001"));
+// RESET for Cypress
+app.post("/reset", (_req, res) => {
+  todos = [];
+  res.json({ success: true });
+});
+
+app.listen(3001, () => console.log(`Server running on http://localhost:3001`));
