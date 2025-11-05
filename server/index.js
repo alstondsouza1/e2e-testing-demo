@@ -26,4 +26,10 @@ app.post("/reset", (_req, res) => {
   res.json({ success: true });
 });
 
+app.delete("/todos/:id", (req, res) => {
+  const { id } = req.params;
+  todos = todos.filter((todo, index) => index !== id);
+  res.json({ success: true });
+});
+
 app.listen(3001, () => console.log(`Server running on http://localhost:3001`));
