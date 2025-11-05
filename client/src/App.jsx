@@ -27,6 +27,13 @@ function App() {
     setText("");
   };
 
+  const deleteTodo = async (id) => {
+    await fetch(`http://localhost:3001/todos/${id}`, {
+      method: "DELETE",
+    });
+    setTodos(prev => prev.filter((todo, index) => index !== id));
+  };
+
   return (
     <main style={{ fontFamily: "system-ui", padding: 24, maxWidth: 500 }}>
       <h1>To-Do App</h1>
@@ -45,7 +52,7 @@ function App() {
       {/* list of tasks */}
       <ul style={{ marginTop: 12 }}>
         {todos.map((t, i) => (
-          <li key={i}>{t}</li>
+          <li key={i}>{t} <button onClick={() => deleteTodo(i)}>Delete</button></li>
         ))}
       </ul>
     </main>
