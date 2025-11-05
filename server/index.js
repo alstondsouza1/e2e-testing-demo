@@ -27,8 +27,8 @@ app.post("/reset", (_req, res) => {
 });
 
 app.delete("/todos/:id", (req, res) => {
-  const { id } = req.params;
-  todos = todos.filter((todo, index) => index !== id);
+  const id = Number(req.params.id);
+  todos = todos.filter((_, index) => index !== id);
   res.json({ success: true });
 });
 

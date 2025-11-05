@@ -62,15 +62,32 @@ describe("Todo App", () => {
 });
 ```
 
+```js
+describe("Delete Todo From List", () => {
+
+    beforeEach(() => {
+      cy.request("POST", "http://localhost:3001/reset");
+    });
+
+    it("deletes a todo", () => {
+      cy.visit("/");
+      cy.get("input[aria-label='todo-input']").type("Go to the gym");
+      cy.contains("Add").click();
+      cy.contains("li", "Go to the gym").should("exist");
+      cy.contains("button", "Delete").click();
+      cy.contains("li", "Go to the gym").should("not.exist");
+    });
+});
+```
+
 ---
 
 ## 🔁 API Routes
 
-  Method   Endpoint   Description
-  -------- ---------- ----------------------------
-  GET      `/todos`   Get todos
-  POST     `/todos`   Add todo
-  POST     `/reset`   Reset todos (testing only)
+- GET   `/todos`  Get todos
+- POST  `/todos`   Add todo
+- POST  `/reset`   Reset todos (testing only)
+- DELETE `/todos/:id`  Delete todo by index
 
 ---
 
